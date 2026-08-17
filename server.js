@@ -18,6 +18,9 @@ app.get("/api/health", (_req, res) =>
   res.json({ message: "Server is running", status: "OK" }),
 );
 
+// ------ Routes --------------------
+app.use("/api/auth", require("./routes/auth"));
+
 // ------ Error Handler -------------
 app.use((err, _req, res, _next) => {
   console.error("Unhanced error:", err);
