@@ -37,3 +37,17 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// ─── fetch user ────────────────────────────────────────────────────
+exports.fetchUser = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const user = await User.findById(id).select("-password");
+    return res.json({
+      success: true,
+      user
+    })
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch User" });
+  }
+};
