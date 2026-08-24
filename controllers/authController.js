@@ -17,9 +17,10 @@ const generateToken = (payload) =>
 
 // ─── Login user ────────────────────────────────────────────────────
 exports.login = async (req, res) => {
-  const { username, password } = req.body;
+  const { userName, password } = req.body;
+  console.log('req', req.body);
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ userName });
     if (!user) {
       return res.status(401).json({ message: "Invalid username or password" });
     }
@@ -29,7 +30,7 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Invalid username or password" });
     }
 
-    const token = generateToken({ id: user._id, username: user.username, role: user.role });
+    const token = generateToken({ id: user._id, username: user.userName, role: user.role });
     res.cookie("token", token, COOKIE_OPTIONS);
     res.status(200).json({ message: "Login successful", token });
   } catch (error) {
