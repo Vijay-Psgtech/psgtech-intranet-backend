@@ -10,6 +10,12 @@ const IntraDocSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  urltext: {
+    type: String
+  },
+  filename: {
+    type: String
+  }
 });
 
 module.exports = mongoose.model("IntraDocs", IntraDocSchema);
