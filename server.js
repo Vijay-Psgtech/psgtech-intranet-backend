@@ -41,6 +41,7 @@ app.get("/api/health", (_req, res) =>
 
 // ------ Routes --------------------
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/documents", require("./routes/documents"));
 
 // ------ Error Handler -------------
 app.use((err, _req, res, _next) => {
