@@ -14,12 +14,19 @@ const publishDocumentSchema = new mongoose.Schema(
     { timestamps: true },
 );
 
-publishDocumentSchema.pre('validate', function validateResource(next) {
-    if (!this.url && !this.file?.data) this.invalidate('resource', 'A URL or file is required.');
-    if (this.url && this.file?.data) this.invalidate('resource', 'Provide either a URL or a file, not both.');
-    if (this.url && !/^https?:\/\//i.test(this.url)) this.invalidate('url', 'URL must start with http:// or https://.');
-    if (this.closingDate && this.closingDate < this.openingDate) this.invalidate('closingDate', 'Closing date cannot be before opening date.');
-    next();
+publishDocumentSchema.pre('validate', function validateResource() {
+    if (!this.url && !this.file?.data) {
+        this.invalidate('resource', 'A URL or file is required.');
+    }
+    if (this.url && this.file?.data) {
+        this.invalidate('resource', 'Provide either a URL or a file, not both.');
+    }
+    if (this.url && !/^https?:\/\//i.test(this.url)) {
+        this.invalidate('url', 'URL must start with http:// or https://.');
+    }
+    if (this.closingDate && this.openingDate && this.closingDate < this.openingDate) {
+        this.invalidate('closingDate', 'Closing date cannot be before opening date.');
+    }
 });
 
 module.exports = mongoose.model("publishDocument", publishDocumentSchema);
